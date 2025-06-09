@@ -1,0 +1,40 @@
+import { CodeLocation } from './ranges';
+
+export interface StyleRule {
+  prop: string;
+  value: string;
+  important: boolean;
+}
+export interface ProcessedAtRule {
+  kind: 'media' | 'layer';
+  value: string;
+}
+export interface StyleSelector {
+  selector: string;
+  postfix: string;
+  pieces: string[];
+  atrules: ProcessedAtRule[];
+  parents?: string[];
+  declaration: number;
+  hash: string;
+}
+export interface StyleBody {
+  id: number;
+  rules: StyleRule[];
+  start: CodeLocation;
+  end: CodeLocation;
+}
+export declare type StyleBodies = Record<number, StyleBody>;
+export interface AtRule {
+  kind: string;
+  id: string;
+  css: string;
+}
+export declare type AtRules = AtRule[];
+export interface SingleStyleAst {
+  file: string;
+  selectors: StyleSelector[];
+  bodies: StyleBodies;
+  unknownAtRules: AtRules;
+}
+export declare type StyleAst = Record<string, SingleStyleAst>;
